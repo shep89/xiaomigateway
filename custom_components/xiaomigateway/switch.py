@@ -1,5 +1,5 @@
 """
-Add support for Aqara RELAY (LLRZMK11LM)
+Add support for Aqara RELAY (LLKZMK11LM)
 """
 # Import the device class from the component that you want to support
 
@@ -58,7 +58,6 @@ def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
         devices.append(w_sensor)
         devices.append(XiaomiGatewaySwitch(hass.data[DOMAIN]['power'][sid],device, name, sid, 'channel_0', w_sensor))
         devices.append(XiaomiGatewaySwitch(hass.data[DOMAIN]['power'][sid],device, name, sid, 'channel_1', w_sensor))
-        devices.append(XiaomiGatewayLight(device, name, sid))
         i = i + 1
     if len(devices) > 0:
         async_add_devices(devices, update_before_add=True)
@@ -151,7 +150,7 @@ class XiaomiGatewaySwitch(SwitchDevice):
             result = await self._try_command(
                 self._device.send,
                 'toggle_ctrl_neutral', [self._channel,'toggle'],self._sid)
-            if result[0] == "ok"
+            if result[0] == "ok":
                 if toggle:
                     self._state = False
                 else:
